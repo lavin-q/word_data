@@ -397,7 +397,7 @@ public class GetWordLastJson {
 			return null;
         }
     }
-	
+
 	private static List<String> getExamWord(Connection con,Statement stmt, ResultSet rs) throws SQLException {
 		String sql = "SELECT wordContent FROM tm_exam_word WHERE isValid = 1";
 
@@ -411,7 +411,7 @@ public class GetWordLastJson {
 		
 		return list;
 	}
-	
+
 	private static List<String> getGeneralWord(Connection con,Statement stmt, ResultSet rs) throws SQLException {
 		String sql = "SELECT wordContent FROM tm_general_word WHERE isValid = 1";
 

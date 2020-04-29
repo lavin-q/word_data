@@ -11,6 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
+import org.springframework.http.MediaType;
 
 import java.io.*;
 import java.sql.Connection;
@@ -22,16 +23,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * 单词示例句抓取
+ */
 public class GetPhraseJson {
 	
 	private static String outpath = "E:\\data\\phrase";
 	
 	private static String logpath = "E:\\phrase_err.txt";
 
-	public static void main(String[] args) {
-		
-		try {
+	public static void main(String[] args) throws SQLException, IOException {
+
 			
 			Map<String,String> phraseMap = getWordPhraseChangeMap();
 			
@@ -43,13 +45,14 @@ public class GetPhraseJson {
 			map.put("c", "search");
 			map.put("_", "1524128488953");
 			
-			for (Map.Entry<String, String> entry : phraseMap.entrySet()){  
-				
+			for (Map.Entry<String, String> entry : phraseMap.entrySet()){
 				map.put("word", entry.getKey());
 				System.out.println("开始处理："+ entry.getKey() + ".json");
 				
 				String result = get(map, "UTF-8", URL);
-				if(result != null && result.length() > 0){
+				/*PostResult postResult = HttpUtils.doGet(URL);
+				String result = postResult.getResponsebody();*/
+				if(result != null && result.length()>0){
 			    	
 			    	Map<Object, Object> resultMap = JSONObject.fromObject(result);
 					
@@ -64,33 +67,28 @@ public class GetPhraseJson {
 			}
 			
 			outputFile(logpath, buffer.toString(), "UTF-8");
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
 		
 		
 	}
 	
-	private static Map<String, String> getWordPhraseChangeMap() throws SQLException {
+	private static Map<String, String> getWordPhraseChangeMap() {
 		
 		Connection con = DataSourceLocalFactory.getConnection();
 		ResultSet rs = null;
 		Map<String,String> phraseMap = new HashMap<String, String>();
 		
 		try {
-			String sql = "SELECT examPhraseID,phraseContent FROM tm_exam_phrase WHERE isValid = 1";
+			String sql = "SELECT id,word FROM  elite_word limit 10";
 	
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
 			
 			while (rs.next()) {
-	 			
-	 			String examPhraseID = rs.getString("examPhraseID");
-	 			String phraseContent = rs.getString("phraseContent");
-	
-	 			phraseMap.put(phraseContent,examPhraseID);
+
+	 			String examPhraseID = rs.getString("id");
+	 			String phraseContent = rs.getString("word");
+				phraseMap.put(phraseContent,examPhraseID);
 			}
 			
 			System.out.println("获取phrase"+phraseMap.size()+"条");
@@ -432,12 +430,12 @@ public class GetPhraseJson {
 	        for (Map.Entry<String, String> entry : map.entrySet()){  
 	        	uri.addParameter(entry.getKey(),entry.getValue());
 			}
-	        //创建httpGet对象
+			//创建httpGet对象
 	        HttpGet hg = new HttpGet(uri.build());
 	        //设置请求的报文头部的编码
-	        hg.setHeader(new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset="+encoding));
+	        hg.setHeader(new BasicHeader("Content-Type", "application/json; charset="+encoding));
 	        //设置期望服务端返回的编码
-	        hg.setHeader(new BasicHeader("Accept", "text/plain;charset="+encoding));
+	        hg.setHeader(new BasicHeader("Accept", MediaType.ALL_VALUE));
 	        //请求服务
 	        CloseableHttpResponse response = client.execute(hg);
 	        //获取响应码

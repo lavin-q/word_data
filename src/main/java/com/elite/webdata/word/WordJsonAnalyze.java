@@ -61,8 +61,8 @@ public class WordJsonAnalyze {
 		    	word = "";
 		    }
 		}
-	}*/
-	
+	}
+	*/
 	
 	@SuppressWarnings("unchecked")
 	public static String analyJson(Map<Object, Object> map,String name){

@@ -22,7 +22,7 @@ public class GetWordJson {
 	
 	//http://www.iciba.com/index.php?a=getWordMean&c=search&list=1%2C3%2C4%2C8%2C9%2C12%2C13%2C15&word=more+popular&_=1524102897143&callback=jsonp6
 	
-	private static String filePath = "E://err.txt";
+	private static String filePath = "E:\\err.txt";
 	
 	private static String outpath = "E:\\var\\data";
 
@@ -297,9 +297,12 @@ public class GetWordJson {
 			return null;
 		}
 	}
-	
+
 	/**
-	 * @param outputFile
+	 *
+	 * @param filePath 文件路径
+	 * @param content  内容
+	 * @param encoding 编码格式
 	 */
 	public static void outputFile(String filePath, String content, String encoding) {
 
@@ -325,7 +328,14 @@ public class GetWordJson {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
+
+	/**
+	 *
+	 * @param filePath 文件路径
+	 * @param encoding 编码格式
+	 * @return 文件列表
+	 */
 	public static List<String> readFile(String filePath, String encoding){
 		
 		List<String> resultList = new ArrayList<String>();
@@ -339,8 +349,8 @@ public class GetWordJson {
 		    InputStreamReader r = new InputStreamReader(new FileInputStream(file), encoding);  
 		    BufferedReader   in = new BufferedReader(r);  
 		    while ((cread = in.readLine()) != null) {  
-		    	resultList.add(cread);  
-		    } 
+		    	resultList.add(cread);
+			}
 		    
 		    return resultList;
     	} catch (IOException e) {
@@ -349,7 +359,13 @@ public class GetWordJson {
             return null;
         }
     }
-	
+
+	/**
+	 *
+	 * @param filePath 文件路径
+	 * @param encoding 编码
+	 * @return 文件内容(String)
+	 */
 	public static String readTxt(String filePath, String encoding){
     	try {
         	File file = new File(filePath);
@@ -374,7 +390,15 @@ public class GetWordJson {
             return null;
         }
     }
-	
+
+
+	/**
+	 * httpClient GET 请求封装
+	 * @param map 请求参数
+	 * @param encoding 编码格式
+	 * @param URL 请求路径
+	 * @return 返回内容
+	 */
 	public static String get(Map<String, String> map, String encoding, String URL) {
 		
 		try {

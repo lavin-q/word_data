@@ -22,7 +22,7 @@ public class WordInitialization {
     /**
      * 单词文档处理
      */
-    @PostConstruct
+   @PostConstruct
    public void wordDocrocess(){
         String docTextContent = DocUtil.getDocTextContent("D:\\下载\\高考英语3500词汇表-带音标.doc");
         String[] split = docTextContent.split("\r\n");
@@ -37,7 +37,11 @@ public class WordInitialization {
                 continue;
             }
             EliteWord eliteWord = new EliteWord();
-            eliteWord.setWord(strings.get(0));
+            //去除空格字符串中
+            String wd = strings.get(0).replaceAll(" +", "");
+            //去除字符串中不间断空格(编码为160),转义字符为\u00A0+
+            wd = wd.replaceAll("\\u00A0+", "");
+            eliteWord.setWord(wd);
             eliteWord.setPhoneticSymbol("["+strings.get(1)+"]");
             eliteWord.setComment(strings.get(2));
             eliteWordService.insert(eliteWord);

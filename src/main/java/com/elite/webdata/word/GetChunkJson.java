@@ -22,6 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ *  单词示例句获取
+ */
 public class GetChunkJson {
 	
 	private static String outpath = "E:\\data\\chunk";
@@ -51,7 +55,7 @@ public class GetChunkJson {
 				String result = get(map, "UTF-8", URL);
 				
 				if(result != null && result.length() > 0){
-			    	
+			    	//请求结果转换为Json
 			    	Map<Object, Object> resultMap = JSONObject.fromObject(result);
 					
 					String output = analyJson(resultMap);
@@ -92,8 +96,7 @@ public class GetChunkJson {
 	 			
 	 			String examPhraseID = rs.getString("id");
 	 			String phraseContent = rs.getString("word");
-	
-	 			phraseMap.put(phraseContent,examPhraseID);
+				phraseMap.put(phraseContent,examPhraseID);
 			}
 			
 			System.out.println("获取phrase"+phraseMap.size()+"条");
@@ -119,7 +122,12 @@ public class GetChunkJson {
 			return phraseMap;
 		}
 	}
-	
+
+	/**
+	 * JSON 解析
+	 * @param map
+	 * @return
+	 */
 	public static String analyJson(Map<Object, Object> map){
 		
 		Map<Object, Object> resultMap = new HashMap<Object, Object>();
@@ -345,6 +353,12 @@ public class GetChunkJson {
 		}
 	}
 
+	/**
+	 * jSON写入文件
+	 * @param filePath
+	 * @param content
+	 * @param encoding
+	 */
 	public static void outputFile(String filePath, String content, String encoding) {
 
 		try{
@@ -369,7 +383,13 @@ public class GetChunkJson {
 			System.out.println(e.getMessage());
 		}
 	}
-	
+
+	/**
+	 * 读取文件
+	 * @param filePath
+	 * @param encoding
+	 * @return
+	 */
 	public static List<String> readFile(String filePath, String encoding){
 		
 		List<String> resultList = new ArrayList<String>();
@@ -393,7 +413,13 @@ public class GetChunkJson {
             return null;
         }
     }
-	
+
+	/**
+	 *
+	 * @param filePath
+	 * @param encoding
+	 * @return
+	 */
 	public static String readTxt(String filePath, String encoding){
     	try {
         	File file = new File(filePath);
@@ -418,7 +444,14 @@ public class GetChunkJson {
             return null;
         }
     }
-	
+
+	/**
+	 * HttpClient GET 请求封装
+	 * @param map 请求参数
+	 * @param encoding 编码格式
+	 * @param URL 请求路径
+	 * @return 请求结果
+	 */
 	public static String get(Map<String, String> map, String encoding, String URL) {
 		
 		try {

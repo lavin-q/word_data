@@ -109,11 +109,12 @@ public class WordAnalyze {
 		}
 		return senWordMap;
 	}
-	
+
 	/**
 	 * clean Words strange char
-	 * @param srcText
-	 * @param findText
+	 * @param words
+	 * @param character
+	 * @param map
 	 * @return
 	 */
 	public static String cleanChars(String words,String character,Map<String,String> map){
