@@ -24,7 +24,7 @@ import java.util.Map;
 
 
 /**
- *  单词示例句获取
+ *  单词语块
  */
 public class GetChunkJson {
 	
