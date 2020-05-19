@@ -14,15 +14,15 @@ import java.util.List;
 /**
  * 高考3500单词初始化类
  */
-@Controller
+//@Controller
 public class WordInitialization {
 
-    @Autowired
+    //@Autowired
     private EliteWordService eliteWordService;
     /**
      * 单词文档处理
      */
-   @PostConstruct
+   //@PostConstruct
    public void wordDocrocess(){
         String docTextContent = DocUtil.getDocTextContent("D:\\下载\\高考英语3500词汇表-带音标.doc");
         String[] split = docTextContent.split("\r\n");

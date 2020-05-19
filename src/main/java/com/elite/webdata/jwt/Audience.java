@@ -17,5 +17,8 @@ public class Audience {
     private String clientId;
     private String base64Secret;
     private String name;
+    /**
+     * 过期时间
+     */
     private int expiresSecond;
 }
