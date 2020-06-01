@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
  * Redission 配置类
  */
 
-@Configuration
+//@Configuration
 public class RedissonConfig {
 
-    @Bean(destroyMethod = "shutdown")
+    //@Bean(destroyMethod = "shutdown")
     public RedissonClient redissonClient(){
         Config config = new Config();
         //多节点

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 @Setter
-public class Audience {
+public class AudienceProperties {
     private String clientId;
     private String base64Secret;
     private String name;

@@ -18,7 +18,7 @@ import java.util.UUID;
 public class AdminUserController {
 
     @Autowired
-    private Audience audience;
+    private AudienceProperties audience;
 
     @PostMapping("/jwt/login")
     @JwtIgnore
@@ -37,7 +37,8 @@ public class AdminUserController {
         // 将token响应给客户端
         JSONObject result = new JSONObject();
         result.put("token", token);
-        return Result.SUCCESS(result);
+        response.setHeader("token",token);
+        return Result.SUCCESS();
     }
 
     @GetMapping("/jwt/users")

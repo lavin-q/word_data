@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class JwtInterceptor extends HandlerInterceptorAdapter{
 
     @Autowired
-    private Audience audience;
+    private AudienceProperties audience;
 
 
     @Override
@@ -52,7 +52,7 @@ public class JwtInterceptor extends HandlerInterceptorAdapter{
         //如果实体类未初始化
         if(audience== null){
             BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
-            audience = (Audience) factory.getBean("audience");
+            audience = (AudienceProperties) factory.getBean("audience");
         }
         // 验证token是否有效--无效已做异常抛出，由全局异常处理后返回对应信息
         JwtTokenUtil.parseJWT(token, audience.getBase64Secret());
