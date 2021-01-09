@@ -11,12 +11,13 @@ import org.springframework.stereotype.Component;
  * @Author : qhm  //作者
  * @Date: 2020-05-30 10:17  //时间
  */
-@Component
+@Component(value = "mqProperties")
 @ConfigurationProperties(prefix = "rabbit")
 @Getter
 @Setter
 @ToString
 public class RabbitProperties {
+
     private String virtualHost;
 
     private String username;
@@ -28,4 +29,8 @@ public class RabbitProperties {
     private Integer port;
 
     private String exchange;
+
+    private String queueName;
+
+    private String routingKey;
 }

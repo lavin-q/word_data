@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfig {
 
-    @Bean("spring")
+    @Bean("springYtil")
     public SpringUtil getSpringUtil(){
         return new SpringUtil();
     }
 
-    @Bean(value = "aaa")
+    @Bean("rabbitMQUtil")
     public RabbitMQUtil getRabbitMQUtil(){
         return new RabbitMQUtil();
     }

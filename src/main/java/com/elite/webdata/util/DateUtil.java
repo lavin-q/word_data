@@ -722,6 +722,10 @@ public class DateUtil {
     public static void main(String[] args) {
         String afterDayDate = getAfterDayDate("2019-12-07", 1);
         System.out.println(afterDayDate);
+
+        String emoji = "\uD83D\uDE42";
+
+
     }
 
 

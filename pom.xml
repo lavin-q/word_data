@@ -16,6 +16,12 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <e-iceblue.version>3.9.4</e-iceblue.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <elasticsearch.version>6.4.3</elasticsearch.version>
+        <spring.data.elasticsearch.version>3.1.0.RELEASE</spring.data.elasticsearch.version>
+        <elastic.job.version>3.0.0-alpha</elastic.job.version>
     </properties>
 
     <dependencies>
@@ -52,6 +58,31 @@
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.deepoove</groupId>
+            <artifactId>poi-tl</artifactId>
+            <version>1.8.2</version>
+        </dependency>
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.doc.free</artifactId>
+            <version>2.7.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>e-iceblue</groupId>
+                    <artifactId>spire.pdf</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.pdf.free</artifactId>
+            <version>2.6.3</version>
+        </dependency>
         <!--<dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson-spring-boot-starter</artifactId>
@@ -59,12 +90,22 @@
         </dependency>-->
 
         <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
-       <!-- <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson-spring-boot-starter</artifactId>
-            <version>2.13.0</version>
+        <!-- <dependency>
+             <groupId>org.redisson</groupId>
+             <artifactId>redisson-spring-boot-starter</artifactId>
+             <version>2.13.0</version>
+         </dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.aspose/aspose-words -->
+        <!--<dependency>
+            <groupId> com.aspose</groupId>
+            <artifactId>aspose-words</artifactId>
+            <version>14.7.0</version>
         </dependency>-->
-
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>core-renderer</artifactId>
+            <version>R8</version>
+        </dependency>
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
@@ -123,22 +164,11 @@
             <version>3.6</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/it.sauronsoftware/jave -->
-        <dependency>
-            <groupId>e-iceblue</groupId>
-            <artifactId>spire.doc</artifactId>
-            <version>3.4.3</version>
-        </dependency>
         <!--JWT依赖-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
             <version>0.9.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
-        <dependency>
-            <groupId>com.rabbitmq</groupId>
-            <artifactId>amqp-client</artifactId>
-            <version>5.7.3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -190,8 +220,69 @@
             <artifactId>jna</artifactId>
             <version>5.5.0</version>
         </dependency>
+        <!--ElasticSearch引用 start-->
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>transport-netty4-client</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.searchbox</groupId>
+            <artifactId>jest</artifactId>
+            <version>6.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <!--ElasticSearch引用 end-->
+        <!-- elastic-job-core引用-->
+        <dependency>
+            <groupId>org.apache.shardingsphere.elasticjob</groupId>
+            <artifactId>elasticjob-lite-core</artifactId>
+            <version>${elastic.job.version}</version>
+        </dependency>
+        <!--elastic-job-core引用-->
+        <!-- quartz引用开始 -->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <!-- quartz引用结束 -->
     </dependencies>
     <repositories>
+        <repository>
+            <id>com.e-iceblue</id>
+            <url>http://repo.e-iceblue.cn/repository/maven-public/</url>
+        </repository>
         <repository>
             <id>releases</id>
             <name>Nexus Release Repository</name>
@@ -215,6 +306,9 @@
             </snapshots>
         </repository>
     </repositories>
+    <!--<repositories>
+
+    </repositories>-->
     <build>
         <plugins>
             <plugin>

@@ -1,0 +1,14 @@
+package com.elite.webdata.designPatterns.strategy.calculation.operation;
+
+import com.elite.webdata.designPatterns.strategy.calculation.Strategy;
+
+
+/**
+ * 乘法
+ */
+public class OperationMultiply implements Strategy<Integer> {
+    @Override
+    public Integer doOperation(Integer num1, Integer num2) {
+        return num1 * num2;
+    }
+}
