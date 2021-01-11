@@ -1,8 +1,6 @@
 package com.elite.webdata.quartz;
 
 import com.elite.webdata.quartz.selfjob.CronSelfJob;
-import com.elite.webdata.quartz.selfjob.CustomizeJob;
-import com.elite.webdata.quartz.selfjob.PrintWordsJob;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 

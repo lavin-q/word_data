@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * @Author : qhm  //作者
  * @Date: 2021-01-09 14:49  //时间
  */
-@Component
+@Component("CustomizeJob")
 public class CustomizeJob implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

@@ -14,7 +14,7 @@ import java.util.Random;
  * @Author : qhm  //作者
  * @Date: 2021-01-09 13:44  //时间
  */
-@Component
+@Component("PrintWordsJob")
 public class PrintWordsJob implements Job {
 
     @Override

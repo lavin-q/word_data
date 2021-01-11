@@ -21,7 +21,7 @@ import java.util.Map;
 @Configuration(proxyBeanMethods=true)
 public class ShiroConfig {
 
-    @Bean
+   /* @Bean
     @ConditionalOnMissingBean
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator(){
         DefaultAdvisorAutoProxyCreator defaultAAP = new DefaultAdvisorAutoProxyCreator();
@@ -56,6 +56,7 @@ public class ShiroConfig {
         //TODO 对所有用户认证 如何修改？
         //map.put("/**", "authc");
         //登录
+
         shiroFilterFactoryBean.setLoginUrl("/login");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/index");
@@ -72,5 +73,5 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
-    }
+    }*/
 }
