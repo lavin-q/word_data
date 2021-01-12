@@ -5,7 +5,6 @@ import com.elite.webdata.elasticjob.mapper.TbJobMapper;
 import com.elite.webdata.elasticjob.service.ElasticJobService;
 import com.elite.webdata.rabbitMQ.utils.SpringUtil;
 import lombok.extern.log4j.Log4j2;
-import org.apache.shardingsphere.elasticjob.api.ElasticJob;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
@@ -41,9 +40,15 @@ public class ElasticJobUtil {
     @Resource
     private SpringUtil springUtil;
 
+    private CoordinatorRegistryCenter coordinatorRegistryCenter;
+
+    public ElasticJobUtil() {
+    }
+
     public CoordinatorRegistryCenter createRegistryCenter(String zkAddress, String nameSpace) {
         CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration(zkAddress, nameSpace));
         regCenter.init();
+        coordinatorRegistryCenter = regCenter;
         return regCenter;
     }
 
@@ -56,13 +61,23 @@ public class ElasticJobUtil {
     public void initScheduler() {
         try {
             List<TbJob> tbJobs = this.tbJobMapper.selectByExample(null);
+            CoordinatorRegistryCenter registryCenter = createRegistryCenter(zkAddress, null);
+            List<String> childrenKeys1 = registryCenter.getChildrenKeys("/");
             for (TbJob job : tbJobs) {
-                SimpleJob myJob = (SimpleJob)springUtil.getBean(job.getClassName());
+                SimpleJob myJob = (SimpleJob) springUtil.getBean(job.getClassName());
                 System.out.println(Objects.isNull(myJob));
-                new ScheduleJobBootstrap(createRegistryCenter(zkAddress,job.getNameSpace()), myJob, createJobConfiguration(job.getJobName(),job.getShardingNum(),job.getCron())).schedule();
+                //判断Job是否存在与于当前空间
+                CoordinatorRegistryCenter registryCenter1 = createRegistryCenter(zkAddress, job.getNameSpace());
+                List<String> childrenKeys = registryCenter1.getChildrenKeys("/");
+                if(childrenKeys.contains(job.getJobName())){
+                    registryCenter1.remove("/"+job.getJobName());
+                }
+                JobConfiguration jobConfiguration = createJobConfiguration(job.getJobName(), job.getShardingNum(), job.getCron());
+                ScheduleJobBootstrap scheduleJobBootstrap = new ScheduleJobBootstrap(registryCenter1, myJob, jobConfiguration);
+                scheduleJobBootstrap.schedule();
             }
         } catch (Exception e) {
-            log.error("初始化作业出错{}",e.getMessage());
+            log.error("初始化作业出错{}", e.getMessage());
         }
     }
 

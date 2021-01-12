@@ -19,7 +19,7 @@ public class MyJobDemo {
     private static String zkAddress = "127.0.0.1:2181";
 
     public static void main(String[] args) throws Exception {
-        ElasticJob myJob = (ElasticJob)Class.forName("com.elite.webdata.elasticjob.MyJob").newInstance();
+        ElasticJob myJob = (ElasticJob)Class.forName("com.elite.webdata.elasticjob.job.MyJob").newInstance();
         new ScheduleJobBootstrap(createRegistryCenter(), myJob, createJobConfiguration()).schedule();
 
 
