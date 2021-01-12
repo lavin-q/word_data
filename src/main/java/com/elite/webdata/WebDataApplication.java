@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
-@MapperScan("com.elite.webdata.mapper")
+@MapperScan(basePackages = "com.elite.webdata.elasticjob")
 @EnableConfigurationProperties
 @EnableScheduling
 public class WebDataApplication {

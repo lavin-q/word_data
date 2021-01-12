@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <classPathEntry
-            location="D:\apache-maven-3.6.3\maven-repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+            location="D:\apache-maven-3.6.3\repository\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
 
     <context id="machineTables" targetRuntime="MyBatis3" defaultModelType="flat">
         <commentGenerator>
@@ -14,9 +14,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/elite?useUnicode=true&amp;characterEncoding=utf-8&amp;noAccessToProcedureBodies=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8"
+                        connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=utf-8&amp;noAccessToProcedureBodies=true&amp;useSSL=false&amp;serverTimezone=GMT%2B8"
                         userId="root"
-                        password="root">
+                        password="123456">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -37,8 +37,8 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="elite_word" domainObjectName="EliteWord">
-            <property name="useActualColumnNames" value="false"/>
+        <table tableName="tb_job" domainObjectName="TbJob">
+            <property name="useActualColumnNames" value="true"/>
         </table>
 
     </context>

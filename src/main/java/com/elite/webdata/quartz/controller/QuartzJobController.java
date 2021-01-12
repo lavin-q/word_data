@@ -5,6 +5,7 @@ import com.elite.webdata.quartz.dto.JobConfigurationDto;
 import com.elite.webdata.quartz.dto.JobDetailDto;
 import com.elite.webdata.quartz.service.QuartzService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -27,7 +28,7 @@ import java.util.List;
 @RequestMapping("/quartz")
 public class QuartzJobController {
 
-    @Resource
+    @Resource(name = "quartzService")
     private QuartzService quartzService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)

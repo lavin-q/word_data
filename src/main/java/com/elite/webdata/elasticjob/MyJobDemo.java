@@ -6,6 +6,7 @@ import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobB
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  * @Description : 定时任务Demo  //描述
@@ -14,13 +15,18 @@ import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCente
  */
 public class MyJobDemo {
 
+    @Value("${zookeeper.address}")
+    private static String zkAddress = "127.0.0.1:2181";
+
     public static void main(String[] args) throws Exception {
         ElasticJob myJob = (ElasticJob)Class.forName("com.elite.webdata.elasticjob.MyJob").newInstance();
         new ScheduleJobBootstrap(createRegistryCenter(), myJob, createJobConfiguration()).schedule();
+
+
     }
 
     private static CoordinatorRegistryCenter createRegistryCenter() {
-        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration("127.0.0.1:2181", "my-job"));
+        CoordinatorRegistryCenter regCenter = new ZookeeperRegistryCenter(new ZookeeperConfiguration(zkAddress, "my-job"));
         regCenter.init();
         return regCenter;
     }

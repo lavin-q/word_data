@@ -7,6 +7,7 @@ import com.elite.webdata.rabbitMQ.utils.SpringUtil;
 import lombok.extern.log4j.Log4j2;
 import org.quartz.*;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -16,7 +17,7 @@ import java.util.Objects;
  * @Author : qhm  //作者
  * @Date: 2021-01-10 13:50  //时间
  */
-@Component("quartzService")
+@Service("quartzService")
 @Log4j2
 public class QuartzService {
 
