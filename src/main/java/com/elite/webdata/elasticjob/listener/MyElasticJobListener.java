@@ -1,18 +1,18 @@
-package com.elite.webdata.elasticjob;
+package com.elite.webdata.elasticjob.listener;
 
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shardingsphere.elasticjob.api.listener.ElasticJobListener;
 import org.apache.shardingsphere.elasticjob.api.listener.ShardingContexts;
 import org.springframework.stereotype.Component;
 
 /**
- * @Description : TestJob 监听  //描述
+ * @Description :   //描述
  * @Author : qhm  //作者
- * @Date: 2021-01-12 10:21  //时间
+ * @Date: 2021-01-14 11:01  //时间
  */
-@Log4j2
-@Component("selfJobListener")
-public class SelfJobListener implements ElasticJobListener {
+@Slf4j
+@Component("myElasticJobListener")
+public class MyElasticJobListener implements ElasticJobListener {
     @Override
     public void beforeJobExecuted(ShardingContexts shardingContexts) {
         log.info("----------------------{}：运行开始前调用----------------------", shardingContexts.getJobName());

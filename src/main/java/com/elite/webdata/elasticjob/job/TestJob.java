@@ -2,8 +2,6 @@ package com.elite.webdata.elasticjob.job;
 
 import lombok.extern.log4j.Log4j2;
 import org.apache.shardingsphere.elasticjob.api.ShardingContext;
-import org.apache.shardingsphere.elasticjob.api.listener.ElasticJobListener;
-import org.apache.shardingsphere.elasticjob.api.listener.ShardingContexts;
 import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 import org.springframework.stereotype.Component;
 
@@ -14,17 +12,8 @@ import org.springframework.stereotype.Component;
  */
 @Log4j2
 @Component("testJob")
-public class TestJob implements SimpleJob, ElasticJobListener {
-
-    @Override
-    public void beforeJobExecuted(ShardingContexts shardingContexts) {
-        log.info("---------------------自定义定时任务开始----------------------------");
-    }
-
-    @Override
-    public void afterJobExecuted(ShardingContexts shardingContexts) {
-        log.info("---------------------自定义定时任务结束----------------------------");
-    }
+public class TestJob implements SimpleJob {
+    
     @Override
     public void execute(ShardingContext context) {
 

@@ -1,10 +1,12 @@
 package com.elite.webdata.elasticjob.init;
 
+import com.elite.webdata.elasticjob.SelfJobListener;
 import com.elite.webdata.elasticjob.entity.TbJob;
 import com.elite.webdata.elasticjob.mapper.TbJobMapper;
 import com.elite.webdata.elasticjob.service.ElasticJobService;
 import com.elite.webdata.rabbitMQ.utils.SpringUtil;
 import lombok.extern.log4j.Log4j2;
+import org.apache.shardingsphere.elasticjob.api.ElasticJob;
 import org.apache.shardingsphere.elasticjob.api.JobConfiguration;
 import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobBootstrap;
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
@@ -30,15 +32,14 @@ public class ElasticJobUtil {
 
     @Resource(name = "elasticJobService")
     private ElasticJobService elasticJobService;
-
     @Resource
     private TbJobMapper tbJobMapper;
-
     @Value("${zookeeper.address}")
     private String zkAddress;
-
     @Resource
     private SpringUtil springUtil;
+    @Resource
+    private SelfJobListener selfJobListener;
 
     private CoordinatorRegistryCenter coordinatorRegistryCenter;
 
@@ -64,16 +65,16 @@ public class ElasticJobUtil {
             CoordinatorRegistryCenter registryCenter = createRegistryCenter(zkAddress, null);
             List<String> childrenKeys1 = registryCenter.getChildrenKeys("/");
             for (TbJob job : tbJobs) {
-                SimpleJob myJob = (SimpleJob) springUtil.getBean(job.getClassName());
+                ElasticJob myJob = (ElasticJob) springUtil.getBean(job.getClassName());
                 System.out.println(Objects.isNull(myJob));
                 //判断Job是否存在与于当前空间
                 CoordinatorRegistryCenter registryCenter1 = createRegistryCenter(zkAddress, job.getNameSpace());
                 List<String> childrenKeys = registryCenter1.getChildrenKeys("/");
-                if(childrenKeys.contains(job.getJobName())){
-                    registryCenter1.remove("/"+job.getJobName());
+                if (childrenKeys.contains(job.getJobName())) {
+                    registryCenter1.remove("/" + job.getJobName());
                 }
                 JobConfiguration jobConfiguration = createJobConfiguration(job.getJobName(), job.getShardingNum(), job.getCron());
-                ScheduleJobBootstrap scheduleJobBootstrap = new ScheduleJobBootstrap(registryCenter1, myJob, jobConfiguration);
+                ScheduleJobBootstrap scheduleJobBootstrap = new ScheduleJobBootstrap(registryCenter1, myJob, jobConfiguration,selfJobListener);
                 scheduleJobBootstrap.schedule();
             }
         } catch (Exception e) {
