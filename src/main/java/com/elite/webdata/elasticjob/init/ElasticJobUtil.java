@@ -12,7 +12,6 @@ import org.apache.shardingsphere.elasticjob.lite.api.bootstrap.impl.ScheduleJobB
 import org.apache.shardingsphere.elasticjob.reg.base.CoordinatorRegistryCenter;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperConfiguration;
 import org.apache.shardingsphere.elasticjob.reg.zookeeper.ZookeeperRegistryCenter;
-import org.apache.shardingsphere.elasticjob.simple.job.SimpleJob;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -74,12 +73,11 @@ public class ElasticJobUtil {
                     registryCenter1.remove("/" + job.getJobName());
                 }
                 JobConfiguration jobConfiguration = createJobConfiguration(job.getJobName(), job.getShardingNum(), job.getCron());
-                ScheduleJobBootstrap scheduleJobBootstrap = new ScheduleJobBootstrap(registryCenter1, myJob, jobConfiguration,selfJobListener);
+                ScheduleJobBootstrap scheduleJobBootstrap = new ScheduleJobBootstrap(registryCenter1, myJob, jobConfiguration, selfJobListener);
                 scheduleJobBootstrap.schedule();
             }
         } catch (Exception e) {
             log.error("初始化作业出错{}", e.getMessage());
         }
     }
-
 }
